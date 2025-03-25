@@ -3,10 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shopping_app/core/routes/app_router.dart';
 import 'package:shopping_app/core/theme/app_colors.dart';
+import 'package:shopping_app/core/widgets/app_bar_widget.dart';
+import 'package:shopping_app/core/widgets/cart_item_widget.dart';
 import 'package:shopping_app/core/widgets/shimmer_loading.dart';
 import 'package:shopping_app/features/cart/presentation/riverpod/cart_provider.dart';
 import 'package:shopping_app/features/cart/presentation/riverpod/cart_state.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 class CartPage extends ConsumerWidget {
   const CartPage({Key? key}) : super(key: key);
@@ -17,24 +18,7 @@ class CartPage extends ConsumerWidget {
     final isLoading = cartState.status == CartStatus.loading;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'My Cart (${isLoading ? "..." : cartState.totalItems})',
-          style: const TextStyle(fontWeight: FontWeight.w600),
-        ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => context.go(AppRoutes.catalogue),
-        ),
-        actions: [
-          if (cartState.items.isNotEmpty)
-            IconButton(
-              icon: const Icon(Icons.delete_outline),
-              onPressed: () => _showClearCartDialog(context, ref),
-              tooltip: 'Clear cart',
-            ),
-        ],
-      ),
+      appBar: _buildAppBar(context, cartState, isLoading, ref),
       body:
           isLoading
               ? _buildLoadingState()
@@ -45,6 +29,32 @@ class CartPage extends ConsumerWidget {
           isLoading || cartState.items.isEmpty
               ? null
               : _buildCheckoutSection(context, cartState),
+    );
+  }
+
+  PreferredSizeWidget _buildAppBar(
+    BuildContext context,
+    CartState cartState,
+    bool isLoading,
+    WidgetRef ref,
+  ) {
+    return CustomAppBar(
+      title: 'My Cart (${isLoading ? "..." : cartState.totalItems})',
+      titleIcon: Icons.shopping_cart,
+      leadingIcon: Icons.arrow_back,
+      onLeadingTap: () => context.go(AppRoutes.catalogue),
+      actions: [
+        if (cartState.items.isNotEmpty)
+          IconButton(
+            icon: const Icon(
+              Icons.delete_outline,
+              color: AppColors.error,
+              size: 26,
+            ),
+            onPressed: () => _showClearCartDialog(context, ref),
+            tooltip: 'Clear cart',
+          ),
+      ],
     );
   }
 
@@ -115,19 +125,17 @@ class CartPage extends ConsumerWidget {
       separatorBuilder: (context, index) => const Divider(height: 24),
       itemBuilder: (context, index) {
         final item = cartItems[index];
-        return Dismissible(
-          key: Key('cart-item-${item.product.id}'),
-          direction: DismissDirection.endToStart,
-          background: Container(
-            alignment: Alignment.centerRight,
-            padding: const EdgeInsets.only(right: 20),
-            decoration: BoxDecoration(
-              color: AppColors.error.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: const Icon(Icons.delete_outline, color: AppColors.error),
-          ),
-          onDismissed: (direction) {
+        return CartItemWidget(
+          item: item,
+          onIncrement:
+              () => ref
+                  .read(cartProvider.notifier)
+                  .incrementQuantity(item.product.id),
+          onDecrement:
+              () => ref
+                  .read(cartProvider.notifier)
+                  .decrementQuantity(item.product.id),
+          onRemove: () {
             ref.read(cartProvider.notifier).removeItem(item.product.id);
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -141,190 +149,8 @@ class CartPage extends ConsumerWidget {
               ),
             );
           },
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.transparent),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
-                  blurRadius: 1,
-                  offset: const Offset(0, 1),
-                ),
-              ],
-            ),
-            padding: const EdgeInsets.all(12),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Product Image
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Hero(
-                    tag: 'cart-${item.product.id}',
-                    child: CachedNetworkImage(
-                      imageUrl: item.product.thumbnail,
-                      fit: BoxFit.cover,
-                      width: 100,
-                      height: 100,
-                      placeholder:
-                          (context, url) => ShimmerLoading(
-                            child: Container(
-                              width: 100,
-                              height: 100,
-                              color: Colors.white,
-                            ),
-                          ),
-                      errorWidget:
-                          (context, url, error) => Container(
-                            width: 100,
-                            height: 100,
-                            color: AppColors.background,
-                            child: const Icon(Icons.broken_image),
-                          ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 16),
-
-                // Product Details
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Brand
-                      Text(
-                        item.product.brand,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AppColors.textMuted,
-                        ),
-                      ),
-                      const SizedBox(height: 2),
-
-                      // Title
-                      Text(
-                        item.product.title,
-                        style: Theme.of(context).textTheme.titleMedium,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const SizedBox(height: 8),
-
-                      // Price information
-                      Row(
-                        children: [
-                          // Discounted price
-                          Text(
-                            '₹${item.product.discountedPrice.toStringAsFixed(0)}',
-                            style: Theme.of(
-                              context,
-                            ).textTheme.titleMedium?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.primary,
-                            ),
-                          ),
-
-                          // Original price if discounted
-                          if (item.product.discountPercentage > 0) ...[
-                            const SizedBox(width: 8),
-                            Text(
-                              '₹${item.product.price.toStringAsFixed(0)}',
-                              style: Theme.of(
-                                context,
-                              ).textTheme.bodySmall?.copyWith(
-                                decoration: TextDecoration.lineThrough,
-                              ),
-                            ),
-                          ],
-                        ],
-                      ),
-
-                      // Discount percentage
-                      if (item.product.discountPercentage > 0)
-                        Padding(
-                          padding: const EdgeInsets.only(top: 2.0),
-                          child: Text(
-                            '${item.product.discountPercentage.round()}% OFF',
-                            style: Theme.of(
-                              context,
-                            ).textTheme.bodySmall?.copyWith(
-                              color: AppColors.discount,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-
-                      const SizedBox(height: 12),
-
-                      // Quantity controls
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          // Total for this item
-                          Text(
-                            'Total: ₹${(item.quantity * item.product.discountedPrice).toStringAsFixed(0)}',
-                            style: const TextStyle(fontWeight: FontWeight.w500),
-                          ),
-
-                          // Quantity controls
-                          Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(color: AppColors.divider),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Row(
-                              children: [
-                                _buildQuantityButton(
-                                  icon: Icons.remove,
-                                  onPressed:
-                                      () => ref
-                                          .read(cartProvider.notifier)
-                                          .decrementQuantity(item.product.id),
-                                ),
-                                SizedBox(
-                                  width: 40,
-                                  child: Text(
-                                    '${item.quantity}',
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                                _buildQuantityButton(
-                                  icon: Icons.add,
-                                  onPressed:
-                                      () => ref
-                                          .read(cartProvider.notifier)
-                                          .incrementQuantity(item.product.id),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
         );
       },
-    );
-  }
-
-  Widget _buildQuantityButton({
-    required IconData icon,
-    required VoidCallback onPressed,
-  }) {
-    return Material(
-      color: AppColors.background,
-      child: InkWell(
-        onTap: onPressed,
-        child: SizedBox(height: 36, width: 36, child: Icon(icon, size: 18)),
-      ),
     );
   }
 

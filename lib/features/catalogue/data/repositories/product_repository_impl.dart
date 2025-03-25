@@ -31,9 +31,8 @@ class ProductRepositoryImpl implements ProductRepository {
       final product = await _apiClient.getProductById(id);
       return Right(product);
     } on DioException catch (e) {
-      return Left(
-        ServerFailure(e.message ?? 'Failed to fetch product details'),
-      );
+      final errorMessage = e.message ?? 'Failed to fetch product details';
+      return Left(ServerFailure(errorMessage));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
