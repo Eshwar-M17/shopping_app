@@ -1,0 +1,12 @@
+targets:
+  $default:
+    builders:
+      # Configure the json_serializable builder to use explicit to/from JSON functions
+      json_serializable:
+        options:
+          explicit_to_json: true
+      
+      # Configure the Freezed code-generator
+      freezed:
+        options:
+          copy_with: true 

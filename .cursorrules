@@ -1,0 +1,137 @@
+// Hava Havai Hiring Challenge .cursorrules
+
+// Flexibility Notice
+// Note: This is a recommended project structure and best practice set.
+// Remain flexible and adapt to existing project structures.
+// Focus on maintaining consistency with the existing project architecture
+// while applying Flutter best practices and fulfilling the Hava Havai Hiring Challenge requirements.
+
+// Core Requirements for Hava Havai Hiring Challenge
+// 1. Shopping Cart functionality with discount calculation.
+// 2. Fetch products from https://dummyjson.com/products.
+// 3. Pagination for product list.
+// 4. State management with Riverpod.
+// 5. Clean, scalable, and maintainable code following Flutter clean architecture principles.
+// 6. Proper UI design matching the provided mockups (Catalogue & Cart screens).
+// 7. Maintain good Git commit hygiene (frequent, descriptive commits).
+
+// Updated Flutter Best Practices
+
+const flutterBestPractices = [
+    "Adapt to existing project architecture while maintaining clean code principles",
+    "Use Flutter 3.x features and Material 3 design",
+    "Implement clean architecture with clear separation of concerns (data, domain, presentation)",
+    "Use Riverpod for state management consistently across catalogue and cart features",
+    "Follow proper dependency injection practices where applicable",
+    "Implement robust error handling for API calls and cart operations",
+    "Follow platform-specific design guidelines",
+    "Use proper localization techniques if needed",
+    // Additional Hava Havai context:
+    "Ensure the UI follows the provided mockups for Catalogue and Cart screens",
+    "Integrate product discount calculations and reflect them accurately in the UI",
+    "Implement pagination for efficient product listing",
+];
+
+// Project Structure
+// This reference structure is based on Flutter clean architecture practices.
+// Adapt to the project's existing organization while ensuring that Catalogue, Cart, and other core features
+// are separated into distinct modules for better scalability and maintainability.
+
+const projectStructure = `
+lib/
+  core/
+    constants/
+    theme/
+    utils/
+    widgets/
+  features/
+    catalogue/
+      data/
+        datasources/
+        models/
+        repositories/
+      domain/
+        entities/
+        repositories/
+        usecases/
+      presentation/
+        riverpod/
+        pages/
+        widgets/
+    cart/
+      data/
+      domain/
+      presentation/
+      widgets/
+  main.dart
+test/
+  unit/
+  widget/
+  integration/
+`;
+
+// Coding Guidelines
+// Emphasize clean architecture practices for maintainability, scalability, and reusability.
+
+const codingGuidelines = `
+1. Use proper null safety practices.
+2. Implement robust error handling (especially for network calls to dummyjson.com).
+3. Follow proper naming conventions (e.g., ProductModel, CartItem, etc.).
+4. Keep widget composition simple and maintainable.
+5. Implement proper routing (GoRouter recommended if consistent with the project).
+6. Use proper form and data validation where user input is involved.
+7. Follow the Riverpod state management pattern consistently.
+8. Use dependency injection (e.g., GetIt) to decouple components.
+9. Structure the code according to Flutter clean architecture: separate data, domain, and presentation layers.
+10. Maintain a clean Git commit history with frequent, descriptive messages.
+`;
+
+// Widget Guidelines
+// Build reusable UI components for Catalogue and Cart items following clean architecture principles.
+
+const widgetGuidelines = `
+1. Keep widgets small, focused, and reusable.
+2. Use const constructors when possible.
+3. Implement proper widget keys for list items (especially in paginated lists).
+4. Follow layout principles from Material 3 guidelines.
+5. Use proper widget lifecycle methods.
+6. Implement clear loading and error states.
+7. Optimize for performance (lazy loading lists, image caching).
+8. Follow accessibility guidelines (text scaling, color contrast).
+9. Ensure consistent styling for Catalogue and Cart screens.
+`;
+
+// Performance Guidelines
+// Address efficient pagination, discount calculations, and cart operations.
+
+const performanceGuidelines = `
+1. Use caching for images where appropriate (e.g., CachedNetworkImage).
+2. Optimize list views for pagination (use ListView.builder or similar).
+3. Keep build methods efficient and avoid unnecessary rebuilds.
+4. Manage state changes carefully with Riverpod to prevent performance bottlenecks.
+5. Use proper memory management, especially for large product lists.
+6. Consider platform-specific optimizations if needed.
+7. Use release or profile mode for final performance checks.
+`;
+
+// Testing Guidelines
+// Focus on unit tests for business logic, widget tests for UI components, and integration tests for overall flows.
+
+const testingTestingGuidelines = `
+1. Write unit tests for core business logic (discount calculation, cart updates, etc.).
+2. Implement widget tests for UI components (product list, cart items).
+3. Use integration tests for end-to-end flows (adding items to cart, updating quantities, etc.).
+4. Implement proper mocking for API calls to dummyjson.com.
+5. Track test coverage for critical features (cart operations, product fetching).
+6. Follow proper test naming conventions (e.g., Given, When, Then).
+7. Integrate CI/CD testing if possible.
+`;
+
+/*
+Note to Cursor AI:
+- Apply these rules in a way that aligns with the existing project architecture.
+- The primary objective is to implement a shopping cart feature, product listing with pagination,
+  and discount calculations from a remote API, using Riverpod for state management.
+- Maintain a high standard of code quality, modular design, and a user-friendly UI.
+- Ensure that all code is clean, scalable, and maintainable by following Flutter clean architecture practices.
+*/
