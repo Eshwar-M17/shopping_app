@@ -104,7 +104,7 @@ class ProductCard extends StatelessWidget {
                             vertical: 2,
                           ),
                           decoration: BoxDecoration(
-                            color: AppColors.accent,
+                            color: AppColors.discount,
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child: Text(

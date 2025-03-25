@@ -8,7 +8,19 @@ final cartProvider = StateNotifierProvider<CartNotifier, CartState>(
 );
 
 class CartNotifier extends StateNotifier<CartState> {
-  CartNotifier() : super(const CartState());
+  CartNotifier() : super(const CartState(status: CartStatus.initial)) {
+    // Simulate initial loading
+    loadCart();
+  }
+
+  Future<void> loadCart() async {
+    state = state.copyWith(status: CartStatus.loading);
+
+    // Simulate API call or loading from local storage
+    await Future.delayed(const Duration(milliseconds: 800));
+
+    state = state.copyWith(status: CartStatus.loaded);
+  }
 
   void addItem(ProductEntity product) {
     final existingIndex = state.items.indexWhere(

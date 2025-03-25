@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shopping_app/core/routes/app_router.dart';
 import 'package:shopping_app/core/theme/app_colors.dart';
+import 'package:shopping_app/core/widgets/shimmer_loading.dart';
 import 'package:shopping_app/features/cart/presentation/riverpod/cart_provider.dart';
 import 'package:shopping_app/features/catalogue/domain/entities/product_entity.dart';
 import 'package:shopping_app/features/catalogue/domain/usecases/get_product_by_id_usecase.dart';
@@ -43,7 +44,7 @@ class ProductDetailsPage extends ConsumerWidget {
       ),
       body: productAsync.when(
         data: (product) => _buildProductDetails(context, product, ref),
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => ShimmerLoading(child: ProductDetailsShimmer()),
         error: (error, _) => Center(child: Text('Error: ${error.toString()}')),
       ),
     );
@@ -68,11 +69,18 @@ class ProductDetailsPage extends ConsumerWidget {
                   imageUrl: product.images[index],
                   fit: BoxFit.cover,
                   placeholder:
-                      (context, url) =>
-                          const Center(child: CircularProgressIndicator()),
+                      (context, url) => ShimmerLoading(
+                        child: Container(
+                          width: double.infinity,
+                          height: double.infinity,
+                          color: Colors.white,
+                        ),
+                      ),
                   errorWidget:
-                      (context, url, error) =>
-                          const Center(child: Icon(Icons.error)),
+                      (context, url, error) => Container(
+                        color: AppColors.background,
+                        child: const Icon(Icons.error, size: 50),
+                      ),
                 );
               },
             ),
@@ -139,7 +147,7 @@ class ProductDetailsPage extends ConsumerWidget {
                           vertical: 4,
                         ),
                         decoration: BoxDecoration(
-                          color: AppColors.accent,
+                          color: AppColors.primary,
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: Text(

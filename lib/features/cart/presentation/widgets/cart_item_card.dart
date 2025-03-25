@@ -21,7 +21,23 @@ class CartItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.only(bottom: 16),
-      child: Padding(
+      elevation: 0,
+      shadowColor: Colors.transparent,
+      color: Colors.transparent,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.transparent),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 1,
+              offset: const Offset(0, 1),
+            ),
+          ],
+        ),
         padding: const EdgeInsets.all(12),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,11 +52,15 @@ class CartItemCard extends StatelessWidget {
                   imageUrl: item.product.thumbnail,
                   fit: BoxFit.cover,
                   placeholder:
-                      (context, url) =>
-                          const Center(child: CircularProgressIndicator()),
+                      (context, url) => Container(
+                        color: AppColors.background,
+                        child: const Center(child: CircularProgressIndicator()),
+                      ),
                   errorWidget:
-                      (context, url, error) =>
-                          const Center(child: Icon(Icons.error)),
+                      (context, url, error) => Container(
+                        color: AppColors.background,
+                        child: const Center(child: Icon(Icons.error)),
+                      ),
                 ),
               ),
             ),
@@ -64,7 +84,7 @@ class CartItemCard extends StatelessWidget {
                       ),
                       IconButton(
                         icon: const Icon(Icons.delete_outline, size: 20),
-                        color: AppColors.textLight,
+                        color: AppColors.error,
                         onPressed: onRemove,
                         padding: EdgeInsets.zero,
                         constraints: const BoxConstraints(),
@@ -114,7 +134,7 @@ class CartItemCard extends StatelessWidget {
                                     vertical: 2,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: AppColors.accent,
+                                    color: AppColors.primary,
                                     borderRadius: BorderRadius.circular(2),
                                   ),
                                   child: Text(
@@ -150,6 +170,7 @@ class CartItemCard extends StatelessWidget {
                                 color: AppColors.textLight.withOpacity(0.3),
                               ),
                               borderRadius: BorderRadius.circular(4),
+                              color: Colors.white,
                             ),
                             child: Text(
                               item.quantity.toString(),
