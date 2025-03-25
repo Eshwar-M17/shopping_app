@@ -1,74 +1,95 @@
-# Shopping App - Hava Havai Hiring Challenge
+# ShopEase - Modern Flutter Shopping App
 
-A Flutter shopping app built for the Hava Havai Hiring Challenge. This app demonstrates shopping cart functionality with discount calculation, product listing with pagination, and clean architecture principles.
+![Flutter Version](https://img.shields.io/badge/Flutter-3.0+-blue.svg)
+![Dart Version](https://img.shields.io/badge/Dart-3.0+-blue.svg)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
 
-## Features
+A modern, feature-rich shopping application built with Flutter that demonstrates clean architecture, responsive design, and efficient state management using Riverpod. This app provides a seamless shopping experience with comprehensive error handling, performance optimizations, and a modular codebase.
 
-- Product catalogue with pagination
-- Shopping cart with add, remove, and quantity update functionality
-- Discount calculation for products
-- Responsive UI design
+## 🎥 Demo Video
 
-## Architecture
+[<img src="https://img.youtube.com/vi/PLACEHOLDER/0.jpg" width="600">](https://www.youtube.com/watch?v=PLACEHOLDER "ShopEase Demo")
 
-The app follows Clean Architecture principles with a clear separation of concerns:
+*Coming soon: Click the image above to watch a demo of ShopEase in action*
+
+## 📱 Screenshots
+
+<div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 10px; justify-content: center;">
+  <img src="screenshots/screenshot_1.png" alt="Product Catalogue" width="200"/>
+  <img src="screenshots/screenshot_2.png" alt="Product Details" width="200"/>
+  <img src="screenshots/screenshot_3.png" alt="Shopping Cart" width="200"/>
+  <img src="screenshots/screenshot_4.png" alt="Checkout" width="200"/>
+</div>
+
+*Screenshots placeholder - Replace with actual app screenshots*
+
+## ✨ Key Features
+
+- **Product Catalogue** - Browse through a wide range of products with smooth pagination
+- **Detailed Product Pages** - View comprehensive product details, specifications, and images
+- **Shopping Cart** - Add, remove, and update quantities with real-time price calculations
+- **Discount System** - Automatic discount calculations based on product pricing rules
+- **Responsive Design** - Optimized for both mobile and tablet layouts
+- **Offline Support** - Basic functionality available when offline
+- **Advanced Error Handling** - User-friendly error messages and recovery options
+
+## 🏗️ Architecture
+
+The app follows a Clean Architecture approach with a clear separation of concerns:
 
 ```
 lib/
-  core/
-    constants/
-    theme/
-    utils/
-    widgets/
-  features/
-    catalogue/
-      data/
-        datasources/
-        models/
-        repositories/
-      domain/
-        entities/
-        repositories/
-        usecases/
-      presentation/
-        riverpod/
-        pages/
-        widgets/
-    cart/
+  core/              # Core utilities, constants, and reusable components
+    constants/       # App-wide constants
+    theme/           # Theme configuration
+    utils/           # Utility functions and classes
+    widgets/         # Reusable UI components
+  features/          # Feature modules
+    catalogue/       # Product catalogue feature
+      data/          # Data layer with API integration
+      domain/        # Business logic & entities
+      presentation/  # UI components & state management
+    cart/            # Shopping cart feature
       data/
       domain/
       presentation/
-      widgets/
-  main.dart
+  main.dart          # Application entry point
 ```
 
-## Technologies Used
+This architecture provides:
+- **Testability** - Independent layers that can be tested in isolation
+- **Maintainability** - Clear boundaries between components
+- **Scalability** - Easy addition of new features without affecting existing code
 
-- **State Management**: Riverpod
-- **Navigation**: GoRouter
-- **Network & API**: Dio and Retrofit
-- **Data Handling**: JSON serialization
-- **UI Components**: Material 3 Design
-- **Architecture**: Clean Architecture
+## 🛠️ Technologies Used
 
-## Getting Started
+- **State Management**: [Riverpod](https://riverpod.dev/) for efficient, testable state management
+- **Navigation**: [GoRouter](https://pub.dev/packages/go_router) for declarative routing
+- **Network & API**: [Dio](https://pub.dev/packages/dio) and [Retrofit](https://pub.dev/packages/retrofit) for type-safe API integration
+- **Image Handling**: [CachedNetworkImage](https://pub.dev/packages/cached_network_image) for efficient image loading and caching
+- **Data Classes**: [Freezed](https://pub.dev/packages/freezed) for immutable data models
+- **Dependency Injection**: Simple service locator pattern for dependency management
+- **UI Framework**: Material 3 Design components for a modern look and feel
+
+## 🚀 Getting Started
 
 ### Prerequisites
 
-- Flutter SDK
-- Dart SDK
+- Flutter SDK (3.0 or higher)
+- Dart SDK (3.0 or higher)
 - Android Studio / VS Code with Flutter extensions
+- An emulator or physical device for testing
 
 ### Installation
 
 1. Clone the repository
    ```bash
-   git clone https://github.com/yourusername/shopping_app.git
+   git clone https://github.com/yourusername/shopease.git
    ```
 
 2. Navigate to the project directory
    ```bash
-   cd shopping_app
+   cd shopease
    ```
 
 3. Install dependencies
@@ -76,7 +97,7 @@ lib/
    flutter pub get
    ```
 
-4. Run code generation (for Retrofit, JSON Serializable, etc.)
+4. Run code generation for API clients and data models
    ```bash
    flutter pub run build_runner build --delete-conflicting-outputs
    ```
@@ -86,22 +107,39 @@ lib/
    flutter run
    ```
 
-## Usage
+## 💡 Usage
 
-- Browse the product catalogue
-- Click on a product to see details
-- Add products to cart
-- Update quantities in the cart
-- View total price with discounts applied
+- **Browse Products**: Scroll through the product catalogue and use the search feature to find specific items
+- **View Product Details**: Tap on a product to see detailed information, specifications, and additional images
+- **Add to Cart**: Add products to your shopping cart with a single tap
+- **Manage Cart**: View your cart, update quantities, or remove items as needed
+- **View Discounts**: See applied discounts and final prices in real-time
 
-## API Integration
+## 🔌 API Integration
 
-The app fetches products from [DummyJSON](https://dummyjson.com/products) API, which provides mock product data for testing and development.
+The app integrates with the [DummyJSON](https://dummyjson.com/products) API, which provides:
+- Product information and images
+- Category data
+- Price and discount information
 
-## License
+## 🧪 Testing
+
+The application includes:
+- Unit tests for business logic
+- Widget tests for UI components
+- Integration tests for feature workflows
+
+Run tests with:
+```bash
+flutter test
+```
+
+## 📝 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Acknowledgments
+## 🙏 Acknowledgments
 
-This project was created as part of the Hava Havai Hiring Challenge.
+- [Flutter Team](https://flutter.dev/) for the amazing cross-platform framework
+- [DummyJSON](https://dummyjson.com/) for the API service used in this project
+- All the open-source package maintainers whose work made this project possible
