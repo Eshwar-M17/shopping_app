@@ -7,6 +7,7 @@ import 'package:shopping_app/features/catalogue/domain/entities/product_entity.d
 import 'package:shopping_app/features/catalogue/presentation/riverpod/product_provider.dart';
 import 'package:shopping_app/features/catalogue/presentation/riverpod/product_state.dart';
 import 'package:shopping_app/features/catalogue/presentation/widgets/product_card.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class CataloguePage extends ConsumerStatefulWidget {
   const CataloguePage({Key? key}) : super(key: key);
@@ -56,13 +57,17 @@ class _CataloguePageState extends ConsumerState<CataloguePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Shopping App'),
+        title: const Text(
+          'Catalogue',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: Colors.pink[50],
         actions: [
           Stack(
             alignment: Alignment.center,
             children: [
               IconButton(
-                icon: const Icon(Icons.shopping_cart),
+                icon: const Icon(Icons.shopping_cart, color: Colors.black87),
                 onPressed: () => context.go(AppRoutes.cart),
               ),
               if (cartItemCount > 0)
@@ -72,7 +77,7 @@ class _CataloguePageState extends ConsumerState<CataloguePage> {
                   child: Container(
                     padding: const EdgeInsets.all(2),
                     decoration: BoxDecoration(
-                      color: Colors.red,
+                      color: Colors.pink,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     constraints: const BoxConstraints(
@@ -92,12 +97,14 @@ class _CataloguePageState extends ConsumerState<CataloguePage> {
       ),
       body:
           productState.status == ProductStatus.initial
-              ? const Center(child: CircularProgressIndicator())
-              : _buildProductList(productState),
+              ? const Center(
+                child: CircularProgressIndicator(color: Colors.pink),
+              )
+              : _buildProductGrid(productState),
     );
   }
 
-  Widget _buildProductList(ProductState state) {
+  Widget _buildProductGrid(ProductState state) {
     return RefreshIndicator(
       onRefresh: () async {
         ref.read(productProvider.notifier).resetProducts();
@@ -107,34 +114,127 @@ class _CataloguePageState extends ConsumerState<CataloguePage> {
       child:
           state.products.isEmpty
               ? const Center(child: Text('No products found'))
-              : ListView.builder(
+              : GridView.builder(
                 controller: _scrollController,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.7,
+                  crossAxisSpacing: 8,
+                  mainAxisSpacing: 8,
+                ),
+                padding: const EdgeInsets.all(8),
                 itemCount:
                     state.products.length + (state.hasReachedMax ? 0 : 1),
-                padding: const EdgeInsets.all(16),
                 itemBuilder: (context, index) {
                   if (index >= state.products.length) {
                     return const Center(
                       child: Padding(
                         padding: EdgeInsets.all(16),
-                        child: CircularProgressIndicator(),
+                        child: CircularProgressIndicator(color: Colors.pink),
                       ),
                     );
                   }
 
                   final product = state.products[index];
-                  return ProductCard(
-                    product: product,
-                    onTap: () => _navigateToProductDetails(product),
-                    onAddToCart: () => _addToCart(product),
-                  );
+                  return _buildProductItem(product);
                 },
               ),
     );
   }
 
-  void _navigateToProductDetails(ProductEntity product) {
-    context.go('/product/${product.id}');
+  Widget _buildProductItem(ProductEntity product) {
+    return Card(
+      elevation: 2,
+      margin: const EdgeInsets.all(4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Product Image
+          Expanded(
+            child: ClipRRect(
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(4),
+              ),
+              child: CachedNetworkImage(
+                imageUrl: product.thumbnail,
+                fit: BoxFit.cover,
+                width: double.infinity,
+                placeholder:
+                    (context, url) => const Center(
+                      child: CircularProgressIndicator(color: Colors.pink),
+                    ),
+                errorWidget:
+                    (context, url, error) =>
+                        const Center(child: Icon(Icons.error)),
+              ),
+            ),
+          ),
+
+          // Product Details
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  product.title,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  product.brand,
+                  style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                ),
+                const SizedBox(height: 4),
+                Row(
+                  children: [
+                    Text(
+                      '₹${product.discountedPrice.toStringAsFixed(2)}',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      '₹${product.price.toStringAsFixed(2)}',
+                      style: TextStyle(
+                        fontSize: 12,
+                        decoration: TextDecoration.lineThrough,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                  ],
+                ),
+                Text(
+                  '${product.discountPercentage.toStringAsFixed(2)}% OFF',
+                  style: const TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.pink,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () => _addToCart(product),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.pink[100],
+                      foregroundColor: Colors.black87,
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      textStyle: const TextStyle(fontSize: 12),
+                    ),
+                    child: const Text('Add'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   void _addToCart(ProductEntity product) {

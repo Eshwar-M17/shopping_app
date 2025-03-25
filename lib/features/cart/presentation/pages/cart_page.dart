@@ -5,6 +5,7 @@ import 'package:shopping_app/core/routes/app_router.dart';
 import 'package:shopping_app/core/theme/app_colors.dart';
 import 'package:shopping_app/features/cart/presentation/riverpod/cart_provider.dart';
 import 'package:shopping_app/features/cart/presentation/widgets/cart_item_card.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class CartPage extends ConsumerWidget {
   const CartPage({Key? key}) : super(key: key);
@@ -15,11 +16,19 @@ class CartPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Cart'),
+        title: const Text(
+          'Cart',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: Colors.pink[50],
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black87),
+          onPressed: () => context.go(AppRoutes.catalogue),
+        ),
         actions: [
           if (cartState.items.isNotEmpty)
             IconButton(
-              icon: const Icon(Icons.delete_outline),
+              icon: const Icon(Icons.delete_outline, color: Colors.black87),
               onPressed: () => _showClearCartDialog(context, ref),
             ),
         ],
@@ -70,23 +79,108 @@ class CartPage extends ConsumerWidget {
   Widget _buildCartItems(BuildContext context, WidgetRef ref) {
     final cartItems = ref.watch(cartProvider).items;
 
-    return ListView.builder(
+    return ListView.separated(
       padding: const EdgeInsets.all(16),
       itemCount: cartItems.length,
+      separatorBuilder: (context, index) => const Divider(height: 1),
       itemBuilder: (context, index) {
         final item = cartItems[index];
-        return CartItemCard(
-          item: item,
-          onIncrement:
-              () => ref
-                  .read(cartProvider.notifier)
-                  .incrementQuantity(item.product.id),
-          onDecrement:
-              () => ref
-                  .read(cartProvider.notifier)
-                  .decrementQuantity(item.product.id),
-          onRemove:
-              () => ref.read(cartProvider.notifier).removeItem(item.product.id),
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // Product Image
+              SizedBox(
+                width: 80,
+                height: 80,
+                child: CachedNetworkImage(
+                  imageUrl: item.product.thumbnail,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              const SizedBox(width: 16),
+
+              // Product Details
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item.product.title,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      item.product.brand,
+                      style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                    ),
+                    const SizedBox(height: 4),
+                    Row(
+                      children: [
+                        Text(
+                          '₹${item.product.discountedPrice.toStringAsFixed(2)}',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          '${item.product.discountPercentage.toStringAsFixed(2)}% OFF',
+                          style: const TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.pink,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+
+              // Quantity Controls
+              Row(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.remove, size: 16),
+                          onPressed:
+                              () => ref
+                                  .read(cartProvider.notifier)
+                                  .decrementQuantity(item.product.id),
+                          constraints: const BoxConstraints(
+                            minWidth: 32,
+                            minHeight: 32,
+                          ),
+                          padding: EdgeInsets.zero,
+                        ),
+                        Text(
+                          item.quantity.toString(),
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.add, size: 16),
+                          onPressed:
+                              () => ref
+                                  .read(cartProvider.notifier)
+                                  .incrementQuantity(item.product.id),
+                          constraints: const BoxConstraints(
+                            minWidth: 32,
+                            minHeight: 32,
+                          ),
+                          padding: EdgeInsets.zero,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         );
       },
     );
@@ -112,12 +206,15 @@ class CartPage extends ConsumerWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Total:', style: Theme.of(context).textTheme.titleMedium),
+                const Text(
+                  'Amount Price',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
                 Text(
-                  '\$${totalPrice.toStringAsFixed(2)}',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: AppColors.primary,
+                  '₹${totalPrice.toStringAsFixed(2)}',
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
+                    fontSize: 18,
                   ),
                 ),
               ],
@@ -127,7 +224,6 @@ class CartPage extends ConsumerWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  // Implement checkout logic here
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text(
@@ -137,9 +233,11 @@ class CartPage extends ConsumerWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.pink,
+                  foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
-                child: const Text('Checkout'),
+                child: const Text('Check Out'),
               ),
             ),
           ],
