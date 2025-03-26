@@ -11,7 +11,7 @@ A modern shopping application built with Flutter that demonstrates clean archite
 
 <div align="center">
   <video width="600" controls>
-    <source src="screenshots/demo_vid-1.mp4" type="video/mp4">
+    <source src="screenshots/shopping_app.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 </div>
