@@ -2,15 +2,15 @@ import 'package:equatable/equatable.dart';
 
 class ProductEntity extends Equatable {
   final int id;
-  final String title;
-  final String description;
+  final String? title;
+  final String? description;
   final double price;
   final double discountPercentage;
   final double rating;
   final int stock;
-  final String brand;
-  final String category;
-  final String thumbnail;
+  final String? brand;
+  final String? category;
+  final String? thumbnail;
   final List<String> images;
 
   const ProductEntity({
@@ -30,6 +30,12 @@ class ProductEntity extends Equatable {
   double get discountedPrice {
     return price - (price * discountPercentage / 100);
   }
+
+  String get safeTitle => title ?? 'Unknown Product';
+  String get safeDescription => description ?? 'No description available';
+  String get safeBrand => brand ?? 'Unknown Brand';
+  String get safeCategory => category ?? 'Uncategorized';
+  String get safeThumbnail => thumbnail ?? '';
 
   @override
   List<Object?> get props => [

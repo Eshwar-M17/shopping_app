@@ -38,7 +38,7 @@ class ProductCardWidget extends StatelessWidget {
                   child: Hero(
                     tag: 'product-${product.id}',
                     child: CachedNetworkImage(
-                      imageUrl: product.thumbnail,
+                      imageUrl: product.safeThumbnail,
                       fit: BoxFit.cover,
                       placeholder:
                           (context, url) => ShimmerLoading(
@@ -89,7 +89,7 @@ class ProductCardWidget extends StatelessWidget {
                 children: [
                   // Brand
                   Text(
-                    product.brand,
+                    product.safeBrand,
                     style: Theme.of(
                       context,
                     ).textTheme.bodySmall?.copyWith(color: AppColors.textMuted),
@@ -98,7 +98,7 @@ class ProductCardWidget extends StatelessWidget {
 
                   // Title
                   Text(
-                    product.title,
+                    product.safeTitle,
                     style: Theme.of(context).textTheme.titleMedium,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,

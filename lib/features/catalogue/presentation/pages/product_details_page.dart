@@ -99,13 +99,28 @@ class ProductDetailsPage extends ConsumerWidget {
   }
 
   Widget _buildProductImages(ProductEntity product) {
+    if (product.images.isEmpty) {
+      return Container(
+        height: 300,
+        color: AppColors.background,
+        child: const Center(
+          child: Icon(Icons.image_not_supported, size: 80, color: Colors.grey),
+        ),
+      );
+    }
+
     return SizedBox(
       height: 300,
       child: PageView.builder(
         itemCount: product.images.length,
         itemBuilder: (context, index) {
+          final imageUrl =
+              product.images[index].isNotEmpty
+                  ? product.images[index]
+                  : product.safeThumbnail;
+
           return CachedNetworkImage(
-            imageUrl: product.images[index],
+            imageUrl: imageUrl,
             fit: BoxFit.cover,
             placeholder:
                 (context, url) => ShimmerLoading(
@@ -134,7 +149,10 @@ class ProductDetailsPage extends ConsumerWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(product.brand, style: Theme.of(context).textTheme.titleMedium),
+            Text(
+              product.safeBrand,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
             Row(
               children: [
                 const Icon(Icons.star, color: Colors.amber, size: 20),
@@ -150,7 +168,7 @@ class ProductDetailsPage extends ConsumerWidget {
         const SizedBox(height: 8),
 
         // Title
-        Text(product.title, style: Theme.of(context).textTheme.titleLarge),
+        Text(product.safeTitle, style: Theme.of(context).textTheme.titleLarge),
       ],
     );
   }
@@ -200,7 +218,10 @@ class ProductDetailsPage extends ConsumerWidget {
       children: [
         Text('Description', style: Theme.of(context).textTheme.titleMedium),
         const SizedBox(height: 8),
-        Text(product.description, style: Theme.of(context).textTheme.bodyLarge),
+        Text(
+          product.safeDescription,
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
       ],
     );
   }
@@ -239,7 +260,7 @@ class ProductDetailsPage extends ConsumerWidget {
     ref.read(cartProvider.notifier).addItem(product);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('${product.title} added to cart'),
+        content: Text('${product.safeTitle} added to cart'),
         action: SnackBarAction(
           label: 'View Cart',
           onPressed: () => context.go(AppRoutes.cart),
