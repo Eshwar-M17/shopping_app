@@ -49,7 +49,7 @@ class CartItemCard extends StatelessWidget {
                 width: 80,
                 height: 80,
                 child: CachedNetworkImage(
-                  imageUrl: item.product.thumbnail,
+                  imageUrl: item.product.safeThumbnail,
                   fit: BoxFit.cover,
                   placeholder:
                       (context, url) => Container(
@@ -76,7 +76,7 @@ class CartItemCard extends StatelessWidget {
                     children: [
                       Flexible(
                         child: Text(
-                          item.product.title,
+                          item.product.safeTitle,
                           style: Theme.of(context).textTheme.titleMedium,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
@@ -93,7 +93,7 @@ class CartItemCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    item.product.brand,
+                    item.product.safeBrand,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: AppColors.textLight,
                     ),

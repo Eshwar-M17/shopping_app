@@ -28,7 +28,7 @@ class ProductCard extends StatelessWidget {
             AspectRatio(
               aspectRatio: 16 / 9,
               child: CachedNetworkImage(
-                imageUrl: product.thumbnail,
+                imageUrl: product.safeThumbnail,
                 fit: BoxFit.cover,
                 placeholder:
                     (context, url) =>
@@ -45,7 +45,7 @@ class ProductCard extends StatelessWidget {
                 children: [
                   // Product Brand
                   Text(
-                    product.brand,
+                    product.safeBrand,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: AppColors.textLight,
                     ),
@@ -54,7 +54,7 @@ class ProductCard extends StatelessWidget {
 
                   // Product Title
                   Text(
-                    product.title,
+                    product.safeTitle,
                     style: Theme.of(context).textTheme.titleMedium,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
