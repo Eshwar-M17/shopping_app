@@ -61,7 +61,7 @@ class ProductDetailsPage extends ConsumerWidget {
       title: 'Product Details',
       titleIcon: Icons.inventory_2,
       leadingIcon: Icons.arrow_back,
-      onLeadingTap: () => context.pop(),
+      onLeadingTap: () => context.go(AppRoutes.catalogue),
       actions: const [CartBadge()],
     );
   }

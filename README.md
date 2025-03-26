@@ -5,7 +5,7 @@
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 ![Null Safety](https://img.shields.io/badge/Null%20Safety-Enabled-brightgreen.svg)
 
-A modern, feature-rich shopping application built with Flutter that demonstrates clean architecture, responsive design, and efficient state management using Riverpod. This app provides a seamless shopping experience with comprehensive error handling, performance optimizations, and a modular codebase.
+A modern shopping application built with Flutter that demonstrates clean architecture principles, responsive design, and state management using Riverpod. This app provides a user-friendly shopping experience with error handling and a modular codebase.
 
 ## 🎥 Demo Video
 
@@ -16,24 +16,23 @@ A modern, feature-rich shopping application built with Flutter that demonstrates
 ## 📱 Screenshots
 
 <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 10px; justify-content: center;">
-  <img src="screenshots/screenshot_1.png" alt="Product Catalogue" width="200"/>
-  <img src="screenshots/screenshot_2.png" alt="Product Details" width="200"/>
-  <img src="screenshots/screenshot_3.png" alt="Shopping Cart" width="200"/>
-  <img src="screenshots/screenshot_4.png" alt="Checkout" width="200"/>
+  <img src="screenshots/screenshot_1.jpg" alt="Product Catalogue" width="200"/>
+  <img src="screenshots/screenshot_2.jpg" alt="Product Details" width="200"/>
+  <img src="screenshots/screenshot_3.jpg" alt="Shopping Cart" width="200"/>
+  <img src="screenshots/screenshot_4.jpg" alt="Checkout" width="200"/>
 </div>
 
 *Screenshots placeholder - Replace with actual app screenshots*
 
-## ✨ Key Features
+## ✨ Implemented Features
 
-- **Product Catalogue** - Browse through a wide range of products with smooth pagination
-- **Detailed Product Pages** - View comprehensive product details, specifications, and images
+- **Product Catalogue** - Browse through products with efficient pagination
+- **Detailed Product Pages** - View product details, specifications, and images
 - **Shopping Cart** - Add, remove, and update quantities with real-time price calculations
 - **Discount System** - Automatic discount calculations based on product pricing rules
-- **Responsive Design** - Optimized for both mobile and tablet layouts
-- **Offline Support** - Basic functionality available when offline
-- **Advanced Error Handling** - User-friendly error messages and recovery options
-- **Null Safety** - Fully null-safe code with proper error handling for API responses
+- **Responsive UI Components** - Basic responsive design for different screen sizes
+- **Error Handling** - Basic error handling with user-friendly messages
+- **Null Safety** - Null-safe code with safe getters for API responses
 
 ## 🏗️ Architecture
 
@@ -59,46 +58,36 @@ lib/
 ```
 
 This architecture provides:
-- **Testability** - Independent layers that can be tested in isolation
 - **Maintainability** - Clear boundaries between components
 - **Scalability** - Easy addition of new features without affecting existing code
 
-## 🚀 Performance Optimizations
+## 🚀 Performance Features
 
-The app includes numerous performance optimizations:
+Current optimizations in the app include:
 
-- **Widget Composition** - Breaking down complex widgets into smaller, focused components
-- **Const Constructors** - Extensive use of const constructors to minimize rebuilds
-- **Lazy Loading** - Efficient pagination with lazy loading for product lists
-- **Image Caching** - Optimized image loading with proper caching strategies
-- **Memoization** - Pre-computing values outside build methods to reduce repeated calculations
-- **Efficient UI Updates** - Strategic widget rebuilds only when necessary
-- **Optimized Error Handling** - Graceful error handling with minimal UI disruption
-- **Custom JSON Serialization** - Robust handling of API responses with null safety
-- **Smart Resource Management** - Proper cleanup of resources to prevent memory leaks
+- **Widget Structure** - Breaking down widgets into smaller, focused components
+- **Const Constructors** - Strategic use of const constructors where applicable
+- **Pagination** - Efficient product loading with pagination
+- **Image Caching** - Using CachedNetworkImage for optimized image loading
+- **Component Reusability** - Reusing common UI components across the app
 
 ## 🛠️ Technologies Used
 
-- **State Management**: [Riverpod](https://riverpod.dev/) for efficient, testable state management
+- **State Management**: [Riverpod](https://riverpod.dev/) for state management
 - **Navigation**: [GoRouter](https://pub.dev/packages/go_router) for declarative routing
-- **Network & API**: [Dio](https://pub.dev/packages/dio) and [Retrofit](https://pub.dev/packages/retrofit) for type-safe API integration
-- **Image Handling**: [CachedNetworkImage](https://pub.dev/packages/cached_network_image) for efficient image loading and caching
-- **Data Classes**: [Freezed](https://pub.dev/packages/freezed) for immutable data models
-- **Dependency Injection**: Simple service locator pattern for dependency management
-- **UI Framework**: Material 3 Design components for a modern look and feel
+- **Network & API**: [Dio](https://pub.dev/packages/dio) for API integration
+- **Image Handling**: [CachedNetworkImage](https://pub.dev/packages/cached_network_image) for image loading and caching
+- **Dependency Injection**: Provider pattern for simple dependency management
+- **UI Framework**: Material Design components
 
 ## 🛡️ Error Handling
 
-The app implements comprehensive error handling strategies:
+Current error handling implementation includes:
 
-- **API Error Handling** - Graceful handling of network errors with user-friendly messages
-- **Null Safety** - Full implementation of Dart's null safety features
+- **API Error Handling** - Basic handling of network errors
+- **Null Safety** - Implementation of Dart's null safety features
 - **Safe Getters** - Custom getters to safely access potentially null data
-- **Retry Mechanisms** - User-friendly retry options for failed operations
-- **Custom Error Widgets** - Consistent error UI components across the app
-- **Typed Failures** - Domain-specific error types for precise error handling
-- **Error Reporting** - Structured error reporting for easier debugging
-- **Global Error Handler** - Centralized error handling utility for consistent error management
+- **Error Widgets** - Basic error UI components with retry options
 
 ## 🚀 Getting Started
 
@@ -138,11 +127,11 @@ The app implements comprehensive error handling strategies:
 
 ## 💡 Usage
 
-- **Browse Products**: Scroll through the product catalogue and use the search feature to find specific items
-- **View Product Details**: Tap on a product to see detailed information, specifications, and additional images
+- **Browse Products**: Scroll through the product catalogue
+- **View Product Details**: Tap on a product to see detailed information and images
 - **Add to Cart**: Add products to your shopping cart with a single tap
 - **Manage Cart**: View your cart, update quantities, or remove items as needed
-- **View Discounts**: See applied discounts and final prices in real-time
+- **View Discounts**: See applied discounts and final prices
 
 ## 🔌 API Integration
 
@@ -150,18 +139,6 @@ The app integrates with the [DummyJSON](https://dummyjson.com/products) API, whi
 - Product information and images
 - Category data
 - Price and discount information
-
-## 🧪 Testing
-
-The application includes:
-- Unit tests for business logic
-- Widget tests for UI components
-- Integration tests for feature workflows
-
-Run tests with:
-```bash
-flutter test
-```
 
 ## 📝 License
 
@@ -172,3 +149,13 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - [Flutter Team](https://flutter.dev/) for the amazing cross-platform framework
 - [DummyJSON](https://dummyjson.com/) for the API service used in this project
 - All the open-source package maintainers whose work made this project possible
+
+## 🚧 Planned Features & Improvements
+
+These features are planned for future implementation:
+
+- **Comprehensive Testing Suite** - Adding unit, widget and integration tests
+- **Offline Support** - Adding local caching for offline functionality
+- **Advanced Error Handling** - Implementing typed failures and structured error reporting
+- **Enhanced Performance Optimizations** - Adding memoization and more strategic rebuilds
+- **Improved JSON Serialization** - Adding more robust custom serialization
