@@ -3,6 +3,7 @@
 ![Flutter Version](https://img.shields.io/badge/Flutter-3.0+-blue.svg)
 ![Dart Version](https://img.shields.io/badge/Dart-3.0+-blue.svg)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
+![Null Safety](https://img.shields.io/badge/Null%20Safety-Enabled-brightgreen.svg)
 
 A modern, feature-rich shopping application built with Flutter that demonstrates clean architecture, responsive design, and efficient state management using Riverpod. This app provides a seamless shopping experience with comprehensive error handling, performance optimizations, and a modular codebase.
 
@@ -32,6 +33,7 @@ A modern, feature-rich shopping application built with Flutter that demonstrates
 - **Responsive Design** - Optimized for both mobile and tablet layouts
 - **Offline Support** - Basic functionality available when offline
 - **Advanced Error Handling** - User-friendly error messages and recovery options
+- **Null Safety** - Fully null-safe code with proper error handling for API responses
 
 ## 🏗️ Architecture
 
@@ -61,6 +63,20 @@ This architecture provides:
 - **Maintainability** - Clear boundaries between components
 - **Scalability** - Easy addition of new features without affecting existing code
 
+## 🚀 Performance Optimizations
+
+The app includes numerous performance optimizations:
+
+- **Widget Composition** - Breaking down complex widgets into smaller, focused components
+- **Const Constructors** - Extensive use of const constructors to minimize rebuilds
+- **Lazy Loading** - Efficient pagination with lazy loading for product lists
+- **Image Caching** - Optimized image loading with proper caching strategies
+- **Memoization** - Pre-computing values outside build methods to reduce repeated calculations
+- **Efficient UI Updates** - Strategic widget rebuilds only when necessary
+- **Optimized Error Handling** - Graceful error handling with minimal UI disruption
+- **Custom JSON Serialization** - Robust handling of API responses with null safety
+- **Smart Resource Management** - Proper cleanup of resources to prevent memory leaks
+
 ## 🛠️ Technologies Used
 
 - **State Management**: [Riverpod](https://riverpod.dev/) for efficient, testable state management
@@ -70,6 +86,19 @@ This architecture provides:
 - **Data Classes**: [Freezed](https://pub.dev/packages/freezed) for immutable data models
 - **Dependency Injection**: Simple service locator pattern for dependency management
 - **UI Framework**: Material 3 Design components for a modern look and feel
+
+## 🛡️ Error Handling
+
+The app implements comprehensive error handling strategies:
+
+- **API Error Handling** - Graceful handling of network errors with user-friendly messages
+- **Null Safety** - Full implementation of Dart's null safety features
+- **Safe Getters** - Custom getters to safely access potentially null data
+- **Retry Mechanisms** - User-friendly retry options for failed operations
+- **Custom Error Widgets** - Consistent error UI components across the app
+- **Typed Failures** - Domain-specific error types for precise error handling
+- **Error Reporting** - Structured error reporting for easier debugging
+- **Global Error Handler** - Centralized error handling utility for consistent error management
 
 ## 🚀 Getting Started
 
