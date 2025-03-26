@@ -10,14 +10,11 @@ A modern shopping application built with Flutter that demonstrates clean archite
 ## 🎥 Demo Video
 
 <div align="center">
-  <video width="600" controls>
-    <source src="screenshots/shopping_app.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-</div>
-
-<div align="center">
-  <img src="screenshots/thumbnail.png" alt="App Demo Thumbnail" width="600"/>
+  <p><strong>Click the thumbnail below to download and watch the demo video</strong></p>
+  <a href="screenshots/shopping_app.mp4" download>
+    <img src="screenshots/thumbnail.png" alt="App Demo Thumbnail" width="600"/>
+  </a>
+  <p><em>Note: Download the video file to watch the full app demonstration</em></p>
 </div>
 
 ## 📱 Screenshots
