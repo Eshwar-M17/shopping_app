@@ -9,9 +9,16 @@ A modern shopping application built with Flutter that demonstrates clean archite
 
 ## 🎥 Demo Video
 
-[<img src="https://img.youtube.com/vi/PLACEHOLDER/0.jpg" width="600">](https://www.youtube.com/watch?v=PLACEHOLDER "ShopEase Demo")
+<div align="center">
+  <video width="600" controls>
+    <source src="screenshots/demo_vid-1.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>
 
-*Coming soon: Click the image above to watch a demo of ShopEase in action*
+<div align="center">
+  <img src="screenshots/thumbnail.png" alt="App Demo Thumbnail" width="600"/>
+</div>
 
 ## 📱 Screenshots
 
@@ -22,7 +29,6 @@ A modern shopping application built with Flutter that demonstrates clean archite
   <img src="screenshots/screenshot_4.jpg" alt="Checkout" width="200"/>
 </div>
 
-*Screenshots placeholder - Replace with actual app screenshots*
 
 ## ✨ Implemented Features
 
