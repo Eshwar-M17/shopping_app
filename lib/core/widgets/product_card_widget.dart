@@ -1,14 +1,36 @@
+/// A reusable product card widget for displaying products in a grid.
+///
+/// This widget displays product information in a card format, including:
+/// - Product image with discount badge
+/// - Brand and title
+/// - Rating and price information
+/// - Add to cart button
+///
+/// The card handles image loading with placeholders and error states,
+/// and provides tap interactions for viewing details or adding to cart.
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shopping_app/core/theme/app_colors.dart';
 import 'package:shopping_app/core/widgets/shimmer_loading.dart';
 import 'package:shopping_app/features/catalogue/domain/entities/product_entity.dart';
 
+/// A card widget displaying product information with interactive elements.
+///
+/// This widget is used primarily in the product catalogue grid to display
+/// product information in a consistent, attractive format.
 class ProductCardWidget extends StatelessWidget {
+  /// The product entity containing all the product data to display
   final ProductEntity product;
+
+  /// Callback function when the card is tapped (navigates to product details)
   final VoidCallback onTap;
+
+  /// Callback function when the add to cart button is tapped
   final VoidCallback onAddToCart;
 
+  /// Creates a product card widget.
+  ///
+  /// All parameters are required to ensure proper functionality.
   const ProductCardWidget({
     Key? key,
     required this.product,
@@ -33,9 +55,11 @@ class ProductCardWidget extends StatelessWidget {
             // Product Image with discount badge
             Stack(
               children: [
+                // Product image with loading and error states
                 AspectRatio(
                   aspectRatio: 1,
                   child: Hero(
+                    // Hero animation tag for smooth transitions to details page
                     tag: 'product-${product.id}',
                     child: CachedNetworkImage(
                       imageUrl: product.safeThumbnail,
@@ -53,7 +77,7 @@ class ProductCardWidget extends StatelessWidget {
                   ),
                 ),
 
-                // Discount badge
+                // Discount badge - only shown if product has a discount
                 if (hasDiscount)
                   Positioned(
                     top: 8,
@@ -80,14 +104,14 @@ class ProductCardWidget extends StatelessWidget {
               ],
             ),
 
-            // Product Details
+            // Product Details section
             Padding(
               padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Brand
+                  // Brand name
                   Text(
                     product.safeBrand,
                     style: Theme.of(
@@ -96,7 +120,7 @@ class ProductCardWidget extends StatelessWidget {
                   ),
                   const SizedBox(height: 1),
 
-                  // Title
+                  // Product title with ellipsis for long titles
                   Text(
                     product.safeTitle,
                     style: Theme.of(context).textTheme.titleMedium,
@@ -105,11 +129,11 @@ class ProductCardWidget extends StatelessWidget {
                   ),
                   const SizedBox(height: 1),
 
-                  // Rating and Price in a single row
+                  // Rating and Price row
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // Rating
+                      // Rating display with star icon
                       Row(
                         children: [
                           Icon(Icons.star, size: 12, color: AppColors.warning),
@@ -121,9 +145,10 @@ class ProductCardWidget extends StatelessWidget {
                         ],
                       ),
 
-                      // Price
+                      // Price display with original and discounted prices
                       Row(
                         children: [
+                          // Original price (strikethrough) - only shown if discounted
                           if (hasDiscount)
                             Text(
                               '₹${product.price.toStringAsFixed(0)}',
@@ -135,6 +160,7 @@ class ProductCardWidget extends StatelessWidget {
                               ),
                             ),
                           if (hasDiscount) const SizedBox(width: 4),
+                          // Discounted/final price
                           Text(
                             '₹${product.discountedPrice.toStringAsFixed(0)}',
                             style: Theme.of(
@@ -161,6 +187,9 @@ class ProductCardWidget extends StatelessWidget {
     );
   }
 
+  /// Builds the Add to Cart button with appropriate styling.
+  ///
+  /// Uses Material and InkWell for proper touch feedback.
   Widget _buildAddToCartButton(BuildContext context) {
     return Container(
       width: double.infinity,
