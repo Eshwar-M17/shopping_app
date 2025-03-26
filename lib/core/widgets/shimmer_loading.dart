@@ -1,12 +1,30 @@
+/// Shimmer loading effect widgets for displaying placeholder UI during data loading.
+///
+/// This file contains the base shimmer widget along with specific implementations
+/// for different UI components like product cards, cart items, and product details.
+/// These are displayed during loading states to indicate content is being fetched.
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:shopping_app/core/theme/app_colors.dart';
 
+/// A generic shimmer loading effect widget that applies the effect to any child widget.
+///
+/// This base widget uses the shimmer package to create a smooth loading animation
+/// that can be applied to any placeholder UI component to indicate loading state.
 class ShimmerLoading extends StatelessWidget {
+  /// The child widget to apply the shimmer effect to
   final Widget child;
+
+  /// The base color for the shimmer effect (darker tone)
   final Color baseColor;
+
+  /// The highlight color for the shimmer effect (lighter tone)
   final Color highlightColor;
 
+  /// Creates a shimmer loading effect widget.
+  ///
+  /// The [child] parameter is required and represents the placeholder UI to animate.
+  /// [baseColor] and [highlightColor] have defaults but can be customized.
   const ShimmerLoading({
     Key? key,
     required this.child,
@@ -27,7 +45,10 @@ class ShimmerLoading extends StatelessWidget {
   }
 }
 
-// Product Card Shimmer
+/// A shimmer placeholder for a product card in the catalogue grid.
+///
+/// This widget mimics the structure of a ProductCardWidget, creating
+/// placeholders for the image, title, price, rating, and add to cart button.
 class ProductCardShimmer extends StatelessWidget {
   const ProductCardShimmer({Key? key}) : super(key: key);
 
@@ -89,7 +110,10 @@ class ProductCardShimmer extends StatelessWidget {
   }
 }
 
-// Cart Item Shimmer
+/// A shimmer placeholder for a cart item in the shopping cart.
+///
+/// This widget mimics the structure of a CartItemWidget, creating
+/// placeholders for the image, title, brand, price, and quantity controls.
 class CartItemShimmer extends StatelessWidget {
   const CartItemShimmer({Key? key}) : super(key: key);
 
@@ -161,7 +185,10 @@ class CartItemShimmer extends StatelessWidget {
   }
 }
 
-// Product Details Shimmer
+/// A shimmer placeholder for the product details page.
+///
+/// This widget mimics the structure of the ProductDetailsPage, creating
+/// placeholders for the image, title, brand, price, description, and add to cart button.
 class ProductDetailsShimmer extends StatelessWidget {
   const ProductDetailsShimmer({Key? key}) : super(key: key);
 

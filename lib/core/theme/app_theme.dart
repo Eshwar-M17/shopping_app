@@ -1,10 +1,24 @@
+/// Application theming configuration.
+///
+/// This file defines the app's visual theme, including colors, typography,
+/// shapes, and component-specific styling. It centralizes all theming to
+/// ensure consistent UI across the application.
 import 'package:flutter/material.dart';
 import 'package:shopping_app/core/theme/app_colors.dart';
 
+/// Provides theming data for the application.
+///
+/// Contains methods to get predefined themes (currently only light theme,
+/// but could be extended to support dark theme or other variants).
 class AppTheme {
+  /// Returns the light theme configuration for the app.
+  ///
+  /// This theme uses a light background with blue primary colors
+  /// and defines styling for all the major components used in the app.
   static ThemeData get lightTheme {
     return ThemeData(
       useMaterial3: true,
+      // Main color scheme based on our app colors
       colorScheme: ColorScheme(
         brightness: Brightness.light,
         primary: AppColors.primary,
@@ -20,7 +34,7 @@ class AppTheme {
       ),
       scaffoldBackgroundColor: AppColors.background,
 
-      // Typography
+      // Typography - defines text styles for different sizes and roles
       textTheme: const TextTheme(
         displayLarge: TextStyle(
           fontSize: 32,
@@ -47,7 +61,7 @@ class AppTheme {
         ),
       ),
 
-      // AppBar
+      // AppBar styling
       appBarTheme: AppBarTheme(
         backgroundColor: AppColors.surface,
         foregroundColor: AppColors.text,
@@ -62,7 +76,7 @@ class AppTheme {
         iconTheme: const IconThemeData(color: AppColors.primary, size: 24),
       ),
 
-      // Buttons
+      // Elevated buttons styling - used for primary actions
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
@@ -79,7 +93,7 @@ class AppTheme {
         ),
       ),
 
-      // Text buttons
+      // Text buttons styling - used for secondary actions
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: AppColors.primary,
@@ -88,7 +102,7 @@ class AppTheme {
         ),
       ),
 
-      // Cards
+      // Cards styling - used for product cards, info boxes, etc.
       cardTheme: CardTheme(
         color: AppColors.surface,
         elevation: 1,
@@ -98,14 +112,14 @@ class AppTheme {
         margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
       ),
 
-      // Divider
+      // Divider styling for separators
       dividerTheme: const DividerThemeData(
         color: AppColors.divider,
         thickness: 1,
         space: 16,
       ),
 
-      // Input decoration
+      // Input field styling for search fields and forms
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.background,
@@ -123,14 +137,14 @@ class AppTheme {
         ),
       ),
 
-      // List tiles
+      // List tile styling for consistent list items
       listTileTheme: const ListTileThemeData(
         contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         minLeadingWidth: 0,
         minVerticalPadding: 16,
       ),
 
-      // Snackbar
+      // Snackbar styling for notifications and messages
       snackBarTheme: SnackBarThemeData(
         backgroundColor: AppColors.text,
         contentTextStyle: const TextStyle(color: Colors.white),
