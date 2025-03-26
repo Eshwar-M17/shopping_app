@@ -102,12 +102,12 @@ Current error handling implementation includes:
 
 1. Clone the repository
    ```bash
-   git clone https://github.com/yourusername/shopease.git
+   git clone https://github.com/Eshwar-M17/shopping_app
    ```
 
 2. Navigate to the project directory
    ```bash
-   cd shopease
+   cd shopping_app
    ```
 
 3. Install dependencies
@@ -139,16 +139,6 @@ The app integrates with the [DummyJSON](https://dummyjson.com/products) API, whi
 - Product information and images
 - Category data
 - Price and discount information
-
-## 📝 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🙏 Acknowledgments
-
-- [Flutter Team](https://flutter.dev/) for the amazing cross-platform framework
-- [DummyJSON](https://dummyjson.com/) for the API service used in this project
-- All the open-source package maintainers whose work made this project possible
 
 ## 🚧 Planned Features & Improvements
 
